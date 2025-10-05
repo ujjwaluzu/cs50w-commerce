@@ -9,7 +9,9 @@ from .models import User, Category, Comment, Listing, Bid
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "listing": Listing.objects.all()
+    })
 
 
 def login_view(request):
