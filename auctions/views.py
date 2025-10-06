@@ -6,7 +6,7 @@ from django.urls import reverse
 from django import forms
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-
+from django.contrib.auth.decorators import login_required
 from .models import User, Category, Comment, Listing, Bid
 
 
@@ -203,3 +203,18 @@ def category_listings(request, category_id):
         "category": category,
         "listings": listings
     })
+@login_required
+def Mylisting(request):
+    # Get all listings authored by the logged-in user
+    mylistings = Listing.objects.filter(author=request.user)
+
+    return render(request, "auctions/mylisting.html", {
+        "mylisting": mylistings
+    })
+@login_required
+def delete_listing(request, listing_id):
+    listing = get_object_or_404(Listing, pk=listing_id)
+    # Only allow author to delete
+    if listing.author == request.user:
+        listing.delete()
+    return redirect("mylisting")

@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+
+<div class="container mt-5">
+    <h2>My Listings</h2>
+    <div class="row g-4">
+        {% for list in mylisting %}
+        <div class="col-sm-6 col-md-4">
+            <div class="card h-100 shadow-sm border-0 rounded overflow-hidden hover-shadow">
+                <a href="{% url 'listing_details' list.id %}" style="text-decoration: none;">
+                    <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 250px;">
+                        <img src="{{ list.image }}" alt="{{ list.title }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
+                </a>
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ list.title }}</h5>
+                    <p class="card-text text-muted">{{ list.description|truncatechars:100 }}</p>
+                    <p><strong class="text-success">₹{{ list.current_price }}</strong></p>
+                    <span class="badge bg-primary me-1">{{ list.category }}</span>
+                    <span class="badge bg-secondary">{{ list.no_of_bids }} Bid(s)</span>
+                </div>
+
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <small>By {{ list.author }}</small>
+                    <form action="{% url 'delete_listing' list.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted">You have no listings yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
