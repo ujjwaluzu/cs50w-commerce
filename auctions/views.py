@@ -98,5 +98,6 @@ def Listing_details(request, listing_id):
 
     is_owner = request.user == listing.author
     return render(request, "auctions/listing_details.html", {
-        "owner": is_owner
+        "owner": is_owner,
+        "listing": listing
     })

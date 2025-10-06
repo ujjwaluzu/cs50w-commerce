@@ -6,4 +6,52 @@
 {% else %}
     <h1>NOOOOOOOOO</h1>
 {% endif %}
+
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Image on the left -->
+        <div class="col-md-6">
+            <img src="{{ listing.image }}" class="img-fluid rounded" alt="{{ listing.title }}">
+        </div>
+
+        <!-- Details on the right -->
+        <div class="col-md-6">
+            <h2>{{ listing.title }}</h2>
+            <p>{{ listing.description }}</p>
+            <p><strong>Category:</strong> {{ listing.category }}</p>
+            <p><strong>Current Price:</strong> ${{ listing.current_price }}</p>
+            <p><strong>Author:</strong> {{ listing.author }}</p>
+            <p><strong>Created at:</strong> {{ listing.created_at|date:"F d, Y" }}</p>
+
+            <!-- Bid Form -->
+            {% if user.is_authenticated %}
+            <form action="" method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="bidAmount" class="form-label">Your Bid</label>
+                    <input type="number" step="0.01" class="form-control" id="bidAmount" name="bid_amount" placeholder="Enter your bid" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Place Bid</button>
+            </form>
+            {% else %}
+            <p class="text-danger mt-4">Please <a href="{% url 'login' %}">login</a> to place a bid.</p>
+            {% endif %}
+
+            <!-- Optional watchlist -->
+            <div class="mt-3">
+                {% if user.is_authenticated %}
+                    {% if listing in user.watchlist.all %}
+                        <a href="" class="btn btn-warning">Remove from Watchlist</a>
+                    {% else %}
+                        <a href="" class="btn btn-outline-warning">Add to Watchlist</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+<!-- {% url 'place_bid' listing.id %} -->
+ <!-- {% url 'remove_watchlist' listing.id %}
+ {% url 'add_watchlist' listing.id %} -->
