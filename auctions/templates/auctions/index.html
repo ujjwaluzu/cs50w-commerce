@@ -3,26 +3,14 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    <!-- {% for list in listing %}
-  
-    <img src="{{ list.image }}" alt="Placeholder" class="img-fluid" style="max-width: 200px; border-radius: 8px;">
-    {{ list.title }}
-    {{ list.description }}
-    {{ list.start_bid }}
-    {{ list.category }}
-    {{ list.active }}
-    {{ list.author }}
-    {{ list.created_at }}
-    {{ list.watchlisted_by }}
-
-    {% endfor %} -->
-
 
     <div class="container mt-4">
     <div class="row g-3">
 
         {% for list in listing %}
+        
         <div class="col-md-4">
+            <a href="{% url 'listing_details' list.id  %}">
             <div class="card shadow-sm h-100">
 
                 <!-- Image -->
@@ -42,7 +30,9 @@
                 </div>
 
             </div>
+            </a>
         </div>
+        
         {% endfor %}
 
     </div>

@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 
 from .models import User, Category, Comment, Listing, Bid
 
@@ -91,3 +92,11 @@ class NewPageform(forms.ModelForm):
     class Meta:
         model = Listing
         fields = ['title', 'description', 'start_bid', 'image', 'category']
+
+def Listing_details(request, listing_id):
+    listing = get_object_or_404(Listing, pk=listing_id)
+
+    is_owner = request.user == listing.author
+    return render(request, "auctions/listing_details.html", {
+        "owner": is_owner
+    })
