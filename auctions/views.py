@@ -101,3 +101,23 @@ def Listing_details(request, listing_id):
         "owner": is_owner,
         "listing": listing
     })
+
+def Place_bid(request):
+    ...
+def Toggle_watchlist(request):
+    ...
+
+def add_comment(request, listing_id):
+    listing = get_object_or_404(Listing, pk=listing_id)
+    if request.method == "POST" and request.user.is_authenticated:
+        comment_text = request.POST.get('comment')
+        if comment_text:
+            Comment.objects.create(item=listing, user=request.user, comment=comment_text)
+    return redirect('listing_details', listing_id=listing_id)
+
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    listing_id = comment.item.id
+    if request.user == comment.user:
+        comment.delete()
+    return redirect('listing_details', listing_id=listing_id)
