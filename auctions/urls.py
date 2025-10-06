@@ -14,5 +14,7 @@ urlpatterns = [
     path('listing/<int:listing_id>/comment/', views.add_comment, name='add_comment'),
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
     path("watchlist/", views.watchlist, name="watchlist"),
-    path('listing/<int:listing_id>/close/', views.close_bid, name='close_bid')
+    path('listing/<int:listing_id>/close/', views.close_bid, name='close_bid'),
+    path('category/', views.CategoryShow, name="category"),
+    path("categories/<int:category_id>/", views.category_listings, name="category_listings")
 ]

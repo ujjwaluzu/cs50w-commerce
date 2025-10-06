@@ -74,7 +74,7 @@ def New_listing(request):
             listing = form.save(commit=False)
             listing.author = request.user
             listing.save()
-            return redirect('index')
+            return redirect('listing_details', listing_id=listing.id)
     else:
         form = NewPageform()
     return render(request, "auctions/newlisting.html", {
@@ -194,4 +194,12 @@ def close_bid(request, listing_id):
 def CategoryShow(request):
     return render(request, "auctions/category.html", {
         "category": Category.objects.all()
+    })
+
+def category_listings(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+    listings = Listing.objects.filter(category=category, active=True)
+    return render(request, "auctions/category_listings.html", {
+        "category": category,
+        "listings": listings
     })

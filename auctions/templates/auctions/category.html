@@ -1,1 +1,32 @@
 {% extends "auctions/layout.html" %}
+{% block body %}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Categories</h2>
+    <div class="row g-3">
+        {% for c in category %}
+        <div class="col-md-4">
+            <a href="{% url 'category_listings' c.id %}" style="text-decoration: none;">
+                <div class="card text-center shadow-sm h-100 hover-shadow">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <h5 class="card-title">{{ c.name }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+</style>
+
+{% endblock %}

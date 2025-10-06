@@ -47,16 +47,26 @@
     {% endif %}
 {% endif %}
 <!-- Bid Form (Only if auction is active and user is not owner) -->
-{% if user.is_authenticated and listing.active and user != listing.author %}
-<form action="{% url 'place_bid' listing.id %}" method="post" class="mt-4">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="bidAmount" class="form-label">Your Bid</label>
-        <input type="number" step="0.01" class="form-control" id="bidAmount" name="bid_amount" placeholder="Enter your bid" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Place Bid</button>
-</form>
+<!-- Bid Form / Login prompt -->
+{% if user.is_authenticated %}
+    {% if listing.active and user != listing.author %}
+        <form action="{% url 'place_bid' listing.id %}" method="post" class="mt-4">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="bidAmount" class="form-label">Your Bid</label>
+                <input type="number" step="0.01" class="form-control" id="bidAmount" name="bid_amount" placeholder="Enter your bid" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Place Bid</button>
+        </form>
+    {% endif %}
+{% else %}
+    {% if listing.active %}
+        <p class="text-danger mt-4">
+            Please <a href="{% url 'login' %}">login</a> to place a bid.
+        </p>
+    {% endif %}
 {% endif %}
+
 
 <!-- Close Bid Button for Author -->
 {% if user == listing.author and listing.active %}
