@@ -12,7 +12,7 @@ from .models import User, Category, Comment, Listing, Bid
 
 def index(request):
     return render(request, "auctions/index.html", {
-        "listing": Listing.objects.all()
+        "listing": Listing.objects.filter(active=True)
     })
 
 
@@ -102,16 +102,24 @@ def Listing_details(request, listing_id):
     highest_bid = listing.bids.order_by('-amount').first()  # Get current highest bid
 
     if highest_bid and request.user.is_authenticated:
-        if highest_bid.user == request.user:
-            highest_bid_message = f"You are currently the highest bidder with ${highest_bid.amount}!"
+        # Only show highest bidder message if auction is still active
+        if highest_bid.user == request.user and listing.active:
+            highest_bid_message = f"You are currently the highest bidder with ₹{highest_bid.amount}!"
+
+    # Determine auction winner for closed auctions
+    highest_bidder = highest_bid.user if highest_bid else None
+    highest_bid_amount = highest_bid.amount if highest_bid else None
 
     context = {
         "listing": listing,
         "owner": is_owner,
-        "highest_bid_message": highest_bid_message
+        "highest_bid_message": highest_bid_message,
+        "highest_bidder": highest_bidder,
+        "highest_bid_amount": highest_bid_amount
     }
 
     return render(request, "auctions/listing_details.html", context)
+
 
 
 def Place_bid(request, listing_id):
@@ -173,4 +181,17 @@ def watchlist(request):
 
     return render(request, "auctions/watchlist.html", {
         "listing": watchlisted_items
+    })
+
+
+def close_bid(request, listing_id):
+    listing = get_object_or_404(Listing, pk=listing_id)
+    if request.user == listing.author:
+        listing.active = False
+        listing.save()
+    return redirect('listing_details', listing_id=listing.id)
+
+def CategoryShow(request):
+    return render(request, "auctions/category.html", {
+        "category": Category.objects.all()
     })
