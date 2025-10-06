@@ -93,19 +93,62 @@ class NewPageform(forms.ModelForm):
         model = Listing
         fields = ['title', 'description', 'start_bid', 'image', 'category']
 
+
 def Listing_details(request, listing_id):
     listing = get_object_or_404(Listing, pk=listing_id)
-
     is_owner = request.user == listing.author
-    return render(request, "auctions/listing_details.html", {
-        "owner": is_owner,
-        "listing": listing
-    })
 
-def Place_bid(request):
-    ...
-def Toggle_watchlist(request):
-    ...
+    highest_bid_message = None
+    highest_bid = listing.bids.order_by('-amount').first()  # Get current highest bid
+
+    if highest_bid and request.user.is_authenticated:
+        if highest_bid.user == request.user:
+            highest_bid_message = f"You are currently the highest bidder with ${highest_bid.amount}!"
+
+    context = {
+        "listing": listing,
+        "owner": is_owner,
+        "highest_bid_message": highest_bid_message
+    }
+
+    return render(request, "auctions/listing_details.html", context)
+
+
+def Place_bid(request, listing_id):
+    listing = get_object_or_404(Listing, pk=listing_id)
+    highest_bid_message = None
+
+    if request.method == "POST" and request.user.is_authenticated:
+        try:
+            bid_amount = float(request.POST.get('bid_amount'))
+        except (TypeError, ValueError):
+            highest_bid_message = "Invalid bid amount."
+        else:
+            current_price = listing.current_price()
+            if bid_amount <= current_price:
+                highest_bid_message = f"Your bid must be higher than the current price (${current_price})."
+            else:
+                # Save the bid
+                Bid.objects.create(item=listing, user=request.user, amount=bid_amount)
+                highest_bid_message = f"You are now the highest bidder with ${bid_amount}!"
+
+    # Render the listing details template directly
+    return render(request, "auctions/listing_details.html", {
+        "listing": listing,
+        "highest_bid_message": highest_bid_message
+    })
+def Toggle_watchlist(request, listing_id):
+        if not request.user.is_authenticated:
+            return redirect('login')
+
+        listing = get_object_or_404(Listing, pk=listing_id)
+
+        if request.user in listing.watchlisted_by.all():
+            listing.watchlisted_by.remove(request.user)
+        else:
+            listing.watchlisted_by.add(request.user)
+
+        return redirect('listing_details', listing_id=listing_id)
 
 def add_comment(request, listing_id):
     listing = get_object_or_404(Listing, pk=listing_id)
@@ -121,3 +164,13 @@ def delete_comment(request, comment_id):
     if request.user == comment.user:
         comment.delete()
     return redirect('listing_details', listing_id=listing_id)
+
+def watchlist(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    watchlisted_items = request.user.watchlist.all()  # because related_name="watchlist"
+
+    return render(request, "auctions/watchlist.html", {
+        "listing": watchlisted_items
+    })

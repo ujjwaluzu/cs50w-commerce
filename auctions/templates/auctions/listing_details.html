@@ -16,9 +16,17 @@
             <p>{{ listing.description }}</p>
             <p><strong>Category:</strong> {{ listing.category }}</p>
             <p><strong>Current Price:</strong> ${{ listing.current_price }}</p>
+            
+
+           
+
             <p><strong>Author:</strong> {{ listing.author }}</p>
             <p><strong>Created at:</strong> {{ listing.created_at|date:"F d, Y" }}</p>
-
+             {% if highest_bid_message %}
+            <div class="alert alert-success mt-2" role="alert">
+            {{ highest_bid_message }}
+            </div>
+            {% endif %}
             <!-- Bid Form -->
             {% if user.is_authenticated %}
             <form action="{% url 'place_bid' listing.id %}" method="post" class="mt-4">
