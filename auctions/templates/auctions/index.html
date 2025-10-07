@@ -1,4 +1,5 @@
 {% extends "auctions/layout.html" %}
+{% load static %}
 
 {% block body %}
  
@@ -7,12 +8,12 @@
 
     <div class="row g-4">
         {% for list in listing %}
-        <div class="col-md-4">
+        <div class="col-12 col-sm-6 col-md-4">
             <a href="{% url 'listing_details' list.id %}" style="text-decoration: none;">
                 <div class="card h-100 shadow-sm border-0 rounded overflow-hidden hover-shadow" style="font-family: 'Roboto', sans-serif;">
                     <!-- Image -->
                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 250px;">
-                        <img src="{{ list.image }}" alt="{{ list.title }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                        <img src="{% if list.image %}{{ list.image }}{% else %}{% static 'auctions/default.jpg' %}{% endif %}"  alt="{{ list.title }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
                     </div>
 
                     <div class="card-body">
@@ -24,7 +25,7 @@
                         </p>
 
                         <p class="mb-2">
-                            <strong class="text-success" style="font-size: 1.1rem;">₹{{ list.current_price }}</strong>
+                            <strong class="text-success" style="font-size: 1.1rem;">${{ list.current_price }}</strong>
                         </p>
                         <span class="badge bg-primary me-1">{{ list.category }}</span>
                         <span class="badge bg-secondary">{{ list.no_of_bids }} Bid(s)</span>

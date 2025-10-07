@@ -1,4 +1,6 @@
 {% extends "auctions/layout.html" %}
+{% load static %}
+
 {% block body %}
 
 <div class="container mt-5">
@@ -9,7 +11,7 @@
             <div class="card h-100 shadow-sm border-0 rounded overflow-hidden hover-shadow">
                 <a href="{% url 'listing_details' list.id %}" style="text-decoration: none;">
                     <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 250px;">
-                        <img src="{{ list.image }}" alt="{{ list.title }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                        <img src="{% if list.image %}{{ list.image }}{% else %}{% static 'auctions/default.jpg' %}{% endif %}" alt="{{ list.title }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
                     </div>
                 </a>
 

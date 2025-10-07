@@ -1,4 +1,6 @@
 {% extends "auctions/layout.html" %}
+{% load static %}
+
 {% block body %}
 
 <div class="container mt-5">
@@ -9,7 +11,7 @@
     <a href="{% url 'listing_details' listing.id %}" style="text-decoration: none;">
         <div class="card h-100 shadow-sm border-0 rounded overflow-hidden hover-shadow" style="font-family: 'Roboto', sans-serif;">
             <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 250px;">
-                <img src="{{ listing.image }}" alt="{{ listing.title }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                <img src="{% if listing.image %}{{ listing.image }}{% else %}{% static 'auctions/default.jpg' %}{% endif %}" alt="{{ listing.title }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
             </div>
             <div class="card-body">
                 <h5 class="card-title" style="font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 1.2rem;">
