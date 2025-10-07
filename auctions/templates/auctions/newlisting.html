@@ -1,29 +1,61 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg p-4" style="max-width: 450px; width: 100%;">
+<div class="container py-5">
+    <div class="d-flex justify-content-center">
+        <div class="card shadow-lg p-4 p-sm-5" style="width: 100%; max-width: 450px; border-radius: 1rem;">
 
-        <h2 class="text-center mb-4">Create New Listing</h2>
+            <h2 class="text-center mb-4" style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Create New Listing</h2>
 
-        <form action="" method="post">
-            {% csrf_token %}
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
-            {% for field in form %}
-                <div class="mb-2">
-                    <label class="form-label">{{ field.label|title }}</label>
-                    {{ field }}
-                    {% if field.errors %}
-                        <div class="text-danger small">{{ field.errors }}</div>
-                    {% endif %}
-                </div>
-            {% endfor %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 500;">{{ field.label|title }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger small mt-1">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
 
-            <button class="btn btn-primary w-100 mt-3 rounded-pill" type="submit">Save</button>
-        </form>
+                <button type="submit" class="btn btn-primary w-100 mt-3 rounded-pill">Save Listing</button>
+            </form>
 
+        </div>
     </div>
 </div>
 
+<style>
+    /* Make all form controls have the same look */
+    input, textarea, select {
+        border-radius: 50px;
+        padding: 0.625rem 1rem;
+        border: 1px solid #ced4da;
+        width: 100%;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
 
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        border-color: #80bdff;
+    }
+
+    /* Mobile padding so card doesn't touch edges */
+    @media (max-width: 576px) {
+        .card {
+            padding: 2rem 1rem;
+        }
+    }
+
+    /* Optional: make textarea height a bit bigger */
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+</style>
 {% endblock %}
+

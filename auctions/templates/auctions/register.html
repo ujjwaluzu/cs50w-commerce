@@ -1,40 +1,61 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg p-4" style="width: 400px;">
-        <h2 class="text-center mb-4">Register</h2>
+<div class="d-flex justify-content-center align-items-center py-5 px-2" style="min-height: 80vh; font-family: 'Roboto', sans-serif;">
+    <div class="card shadow-lg p-4 p-sm-5" style="width: 100%; max-width: 400px; border-radius: 1rem;">
+
+        <h2 class="text-center mb-4" style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Register</h2>
 
         {% if message %}
             <div class="alert alert-danger text-center">{{ message }}</div>
         {% endif %}
 
-        <form action="{% url 'register' %}" method="post">
+        <form action="{% url 'register' %}" method="post" novalidate>
             {% csrf_token %}
+
             <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input class="form-control" autofocus type="text" name="username" placeholder="Enter username">
+                <label class="form-label" style="font-weight: 500;">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter username" required>
             </div>
+
             <div class="mb-3">
-                <label class="form-label">Email Address</label>
-                <input class="form-control" type="email" name="email" placeholder="Enter email">
+                <label class="form-label" style="font-weight: 500;">Email Address</label>
+                <input type="email" name="email" class="form-control" placeholder="Enter email" required>
             </div>
+
             <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input class="form-control" type="password" name="password" placeholder="Enter password">
+                <label class="form-label" style="font-weight: 500;">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter password" required>
             </div>
+
             <div class="mb-3">
-                <label class="form-label">Confirm Password</label>
-                <input class="form-control" type="password" name="confirmation" placeholder="Confirm password">
+                <label class="form-label" style="font-weight: 500;">Confirm Password</label>
+                <input type="password" name="confirmation" class="form-control" placeholder="Confirm password" required>
             </div>
-            <button class="btn btn-primary w-100" type="submit">Register</button>
+
+            <button type="submit" class="btn btn-primary w-100 mt-3 rounded-pill">Register</button>
         </form>
 
-        <p class="text-center mt-3 mb-0">Already have an account?
-            <a href="{% url 'login' %}">Log In here</a>
+        <p class="text-center mt-3 mb-0" style="font-size: 0.9rem;">
+            Already have an account? <a href="{% url 'login' %}">Log In here</a>
         </p>
+
     </div>
 </div>
 
+<!-- <style>
+    /* Smooth focus and consistent look for inputs */
+    input:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        border-color: #80bdff;
+    }
 
+    /* Mobile-friendly padding */
+    @media (max-width: 576px) {
+        .card {
+            padding: 2rem 1rem;
+        }
+    }
+</style> -->
 {% endblock %}

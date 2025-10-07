@@ -1,10 +1,9 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-
-    <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-lg p-4" style="width: 400px;">
-        <h2 class="text-center mb-4">Login</h2>
+<div class="container d-flex justify-content-center align-items-center py-5" style="min-height: 80vh; font-family: 'Roboto', sans-serif;">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%; border-radius: 1rem;">
+        <h2 class="text-center mb-4" style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Login</h2>
 
         {% if message %}
             <div class="alert alert-danger text-center">{{ message }}</div>
@@ -14,13 +13,13 @@
             {% csrf_token %}
             <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input autofocus class="form-control" type="text" name="username" placeholder="Enter username">
+                <input autofocus class="form-control" type="text" name="username" placeholder="Enter username" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input class="form-control" type="password" name="password" placeholder="Enter password">
+                <input class="form-control" type="password" name="password" placeholder="Enter password" required>
             </div>
-            <button class="btn btn-primary w-100" type="submit">Login</button>
+            <button class="btn btn-primary w-100 mt-2 rounded-pill">Login</button>
         </form>
 
         <p class="text-center mt-3 mb-0">Don't have an account? 
@@ -28,6 +27,4 @@
         </p>
     </div>
 </div>
-
-
 {% endblock %}

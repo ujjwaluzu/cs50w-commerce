@@ -54,26 +54,26 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'auctionswon' %}">Auctions Won</a>
+                        </li>
                         {% endif %}
                     </ul>
 
                     <ul class="navbar-nav align-items-center">
-                        {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <span class="text-light me-3">Signed in as <strong>{{ user.username }}</strong></span>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item d-flex flex-wrap align-items-center">
+                        <span class="text-light me-3">Signed in as <strong>{{ user.username }}</strong></span>
+                        <a class="btn btn-outline-light btn-sm me-2 mb-1" href="{% url 'logout' %}">Log Out</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">Log Out</a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item me-2">
-                            <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Log In</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-light btn-sm" href="{% url 'register' %}">Register</a>
-                        </li>
-                        {% endif %}
-                    </ul>
+                    {% else %}
+                    <li class="nav-item d-flex flex-wrap">
+            <a class="btn btn-outline-light btn-sm me-2 mb-1" href="{% url 'login' %}">Log In</a>
+            <a class="btn btn-light btn-sm mb-1" href="{% url 'register' %}">Register</a>
+        </li>
+    {% endif %}
+</ul>
+
 
                 </div>
             </div>

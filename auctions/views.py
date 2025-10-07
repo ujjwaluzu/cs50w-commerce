@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django import forms
+from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -43,12 +44,18 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
+        username = request.POST.get("username", "").strip()
+        email = request.POST.get("email", "").strip()
+        password = request.POST.get("password", "").strip()
+        confirmation = request.POST.get("confirmation", "").strip()
+
+        # Check for empty fields
+        if not username or not email or not password or not confirmation:
+            return render(request, "auctions/register.html", {
+                "message": "All fields are required."
+            })
 
         # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "auctions/register.html", {
                 "message": "Passwords must match."
@@ -56,14 +63,17 @@ def register(request):
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
                 "message": "Username already taken."
             })
+
+        # Log in the user
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
+
     else:
         return render(request, "auctions/register.html")
 
@@ -218,3 +228,4 @@ def delete_listing(request, listing_id):
     if listing.author == request.user:
         listing.delete()
     return redirect("mylisting")
+

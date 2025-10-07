@@ -18,5 +18,7 @@ urlpatterns = [
     path('category/', views.CategoryShow, name="category"),
     path("categories/<int:category_id>/", views.category_listings, name="category_listings"),
     path("mylisting/", views.Mylisting, name="mylisting"),
-     path("delete_listing/<int:listing_id>/", views.delete_listing, name="delete_listing")
+    path("delete_listing/<int:listing_id>/", views.delete_listing, name="delete_listing"),
+    path("auctions_won", views.AuctionsWon, name="auctionswon")
+
 ]
