@@ -32,7 +32,7 @@
                 {% elif user == listing.author %}
                     {% if highest_bidder %}
                         <div class="alert alert-info mt-3">
-                            Auction closed. Winner: <strong>{{ highest_bidder.username }}</strong> with ₹{{ highest_bid_amount }}.
+                            Auction closed. Winner: <strong>{{ highest_bidder.username }}</strong> with ${{ highest_bid_amount }}.
                         </div>
                     {% else %}
                         <div class="alert alert-warning mt-3">Auction closed with no bids.</div>

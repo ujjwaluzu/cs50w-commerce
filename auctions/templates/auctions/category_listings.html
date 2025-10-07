@@ -21,7 +21,7 @@
                     {{ listing.description|truncatechars:100 }}
                 </p>
                 <p class="mb-2">
-                    <strong class="text-success" style="font-size: 1.1rem;">₹{{ listing.current_price }}</strong>
+                    <strong class="text-success" style="font-size: 1.1rem;">${{ listing.current_price }}</strong>
                 </p>
                 <span class="badge bg-primary me-1">{{ listing.category }}</span>
                 <span class="badge bg-secondary">{{ listing.no_of_bids }} Bid(s)</span>

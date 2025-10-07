@@ -229,3 +229,7 @@ def delete_listing(request, listing_id):
         listing.delete()
     return redirect("mylisting")
 
+@login_required
+def AuctionsWon(request):
+    listings = Listing.objects.filter(bids__user=request.user).filter(active=False).distinct()
+    return render(request, "auctions/won_auctions.html", {"listings": listings})

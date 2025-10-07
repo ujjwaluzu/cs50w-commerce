@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ list.title }}</h5>
                     <p class="card-text text-muted">{{ list.description|truncatechars:100 }}</p>
-                    <p><strong class="text-success">₹{{ list.current_price }}</strong></p>
+                    <p><strong class="text-success">${{ list.current_price }}</strong></p>
                     <span class="badge bg-primary me-1">{{ list.category }}</span>
                     <span class="badge bg-secondary">{{ list.no_of_bids }} Bid(s)</span>
                 </div>
