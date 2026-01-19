@@ -80,7 +80,7 @@ Through this project, I gained hands-on experience with:
 2. Apply migrations:
    ```bash
    python manage.py makemigrations auctions
-python manage.py migrate
+   python manage.py migrate
 3. Run the development server:
    ```bash
    python manage.py runserver
