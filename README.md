@@ -1,7 +1,8 @@
 # Commerce
 
 ## 📘 Project Description
-
+[screencast](https://youtu.be/0ZTboEi6qpI?si=cWwmLUPpDd5SUtG1)
+---
 Commerce is an eBay-like e-commerce auction web application built as part of **CS50’s Web Programming with Python and JavaScript (CS50W)**. The project allows users to create auction listings, place bids, leave comments, manage a personal watchlist, and browse listings by category.
 
 The application focuses on server-side web development using **Django**, emphasizing database modeling, user authentication, form handling, and dynamic page rendering.
