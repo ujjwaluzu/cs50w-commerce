@@ -1,6 +1,6 @@
 # Commerce
 
-## 📘 Project Description
+##  Project Description
 [screencast](https://youtu.be/0ZTboEi6qpI?si=cWwmLUPpDd5SUtG1)
 ---
 Commerce is an eBay-like e-commerce auction web application built as part of **CS50’s Web Programming with Python and JavaScript (CS50W)**. The project allows users to create auction listings, place bids, leave comments, manage a personal watchlist, and browse listings by category.
@@ -9,7 +9,7 @@ The application focuses on server-side web development using **Django**, emphasi
 
 ---
 
-## 🎯 Project Objectives
+##  Project Objectives
 
 The primary goals of this project are to:
 
@@ -22,7 +22,7 @@ The primary goals of this project are to:
 
 ---
 
-## 🚀 Features
+##  Features
 
 - User registration, login, and logout
 - Create new auction listings with optional images and categories
@@ -37,7 +37,7 @@ The primary goals of this project are to:
 
 ---
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 - Python  
 - Django  
@@ -47,7 +47,7 @@ The primary goals of this project are to:
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 - `auctions/` – Main application containing models, views, URLs, and templates  
 - `commerce/` – Django project configuration  
@@ -60,7 +60,7 @@ The primary goals of this project are to:
 
 ---
 
-## 🧠 Learning Outcomes
+##  Learning Outcomes
 
 Through this project, I gained hands-on experience with:
 
@@ -73,7 +73,7 @@ Through this project, I gained hands-on experience with:
 
 ---
 
-## ▶️ Running the Project
+##  Running the Project
 
 1. Install dependencies:
    ```bash
